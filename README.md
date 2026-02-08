@@ -1,138 +1,139 @@
-🎬 Movie Recommendation System
+# 🚗 Movie Recommendtion System
 
-A complete Machine Learning + Flask Web Application that recommends movies to users based on content similarity using TF-IDF Vectorization and Cosine Similarity.
+A complete **Machine Learning + Flask Web Application** that recommends movies to users based on content similarity using **TF-IDF Vectorization and Cosine Similarity**.
 
-This system analyzes movie genres and suggests 5 similar movies to the one selected by the user.
+This system analyzes movie genres and suggests **5 similar movies** to the one selected by the user.
 
-🔗 Live Demo
+---
 
-👉 (Add your Render link here after deployment)
+## 🔗 Live Demo
 
-📌 Features
+👉 **Live Application:** [https://car-price-prediction-wsk.onrender.com](https://car-price-prediction-wsk.onrender.com)
 
-Recommend movies based on content similarity
+---
 
-Searchable movie input (no long dropdown)
+## 📌 Features
+* Recommend movies based on content similarity
+* Searchable movie input (no long dropdown)
+* Clean and modern UI with HTML & CSS
+* Flask backend with ML model
+* Automatic model generation during deployment
+* Fully deployable on Render
 
-Clean and modern UI with HTML & CSS
+---
 
-Flask backend with ML model
+## 🛠️ Tech Stack
 
-Automatic model generation during deployment
+### Programming & Libraries
 
-Fully deployable on Render
+* Python
+* Flask
+* Pandas
+* Scikit-learn
+* Pickle
 
-🛠️ Tech Stack
-Programming & Libraries
+### Frontend
 
-Python
+* HTML5
+* CSS3
 
-Flask
+### Deployment & Tools
 
-Pandas
+* Git & GitHub
+* Render (Cloud Deployment)
 
-Scikit-learn
+---
 
-Pickle
+## 📂 Project Structure
 
-Frontend
-
-HTML5
-
-CSS3
-
-Deployment & Tools
-
-Git & GitHub
-
-Render (Cloud Deployment)
-
-📂 Project Structure
+```
 movie-recommendation-system/
 │
 ├── app.py                # Flask application
 ├── train_model.py        # Model training script
-├── movies.csv            # Dataset
 ├── requirements.txt      # Dependencies
-├── Procfile              # Render config
-├── .gitignore
-│
+├── Procfile              # Render deployment config
+├── movies.csv            # Dataset
+├── .gitignore           
 ├── templates/
-│   └── index.html        # UI
+│   └── index.html        # Main UI
 │
 ├── static/
 │   └── style.css         # Styling
+│
+└── README.md
+```
 
+---
 
-.pkl files are not pushed to GitHub. They are generated automatically during deployment.
+## ⚙️ How It Works
 
-⚙️ How It Works
+1. Dataset of movies with genres is loaded
+2. Genres are converted into TF-IDF vectors
+3. Cosine similarity is calculated between movies
+4. User selects a movie
+5. System recommends 5 most similar movies
 
-Dataset of movies with genres is loaded
+---
 
-Genres are converted into TF-IDF vectors
+## ▶️ Run Locally
 
-Cosine similarity is calculated between movies
+### 1️⃣ Clone the repository
 
-User selects a movie
+```bash
+git clone https://github.com/Kavyaagarwal0008/movie-recommendation-system.git
+cd movie-recommendations system
+```
 
-System recommends 5 most similar movies
+### 2️⃣ Create virtual environment
 
-▶️ Run Locally
-1️⃣ Clone repository
-git clone https://github.com/your-username/movie-recommendation-system.git
-cd movie-recommendation-system
-
-2️⃣ Create virtual environment
+```bash
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate   # Windows
+```
 
-3️⃣ Install dependencies
+### 3️⃣ Install dependencies
+
+```bash
 pip install -r requirements.txt
-
-4️⃣ Generate model files
+```
+### 4️⃣ Generate model files
+```bash
 python train_model.py
+```
+### 5️⃣ Run the application
 
-5️⃣ Run Flask app
+```bash
 python app.py
+```
 
+Visit: **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 
-Open: http://127.0.0.1:5000
+---
 
-🚀 Deployment on Render
+## 📊 Machine Learning Models Used
 
-Build Command
+* TF-IDF Vectorization
+* Cosine Similarity
+* Content-Based Filtering
 
-pip install -r requirements.txt && python train_model.py
+---
 
+## 🎯 Applications
 
-Start Command
+* OTT platforms (Netflix, Prime, Hotstar)
+* Movie streaming services
+* Personalized recommendation engines
 
-gunicorn app:app
+---
 
-📊 Machine Learning Technique Used
+## 👩‍💻 Author
 
-TF-IDF Vectorization
-
-Cosine Similarity
-
-Content-Based Filtering
-
-🎯 Applications
-
-OTT platforms (Netflix, Prime, Hotstar)
-
-Movie streaming services
-
-Personalized recommendation engines
-
-💡 Viva / Interview Explanation (Short)
-
-“This system uses TF-IDF vectorization and cosine similarity to recommend movies based on genre similarity, implemented with Flask and deployed on Render.”
-
-👩‍💻 Author
-
-Kavya Agarwal
+**Kavya Agarwal**
 B.Tech CSE-AIML Student | Machine Learning Enthusiast
 
-🔗 GitHub: https://github.com/Kavyaagarwal0008
+🔗 GitHub: [https://github.com/Kavyaagarwal0008](https://github.com/Kavyaagarwal0008)
+
+---
+
+⭐ If you like this project, don’t forget to **star the repository**!
