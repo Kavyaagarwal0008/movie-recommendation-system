@@ -2,45 +2,45 @@ from flask import Flask, render_template, request
 import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import linear_kernel
 
 app = Flask(__name__)
 
-# ✅ Load dataset (make sure movies.csv exists in your repo)
+# ✅ Load movies
 movies = pd.read_csv("movies.csv")
-
-# ✅ Ensure required columns exist
-# If your dataset uses different column names, adjust here
-# Example: "title" and "genres" must exist
 movies["title"] = movies["title"].fillna("")
 movies["genres"] = movies["genres"].fillna("")
 
-def recommend(movie_title, movies_df):
-    tfidf = TfidfVectorizer(stop_words="english")
-    tfidf_matrix = tfidf.fit_transform(movies_df["genres"])
+# ✅ Build TF-IDF ONE TIME (on server start)
+tfidf = TfidfVectorizer(stop_words="english", max_features=8000)
+tfidf_matrix = tfidf.fit_transform(movies["genres"])
 
-    cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+# ✅ mapping title -> index (fast)
+title_to_index = pd.Series(movies.index, index=movies["title"]).drop_duplicates()
 
-    # Find index of selected movie
-    idx_list = movies_df.index[movies_df["title"] == movie_title].tolist()
-    if not idx_list:
+def recommend(movie_title, top_n=5):
+    if movie_title not in title_to_index:
         return []
-    idx = idx_list[0]
 
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]
+    idx = title_to_index[movie_title]
 
-    movie_indices = [i[0] for i in sim_scores]
-    return movies_df["title"].iloc[movie_indices].tolist()
+    # ✅ compute similarity only for that movie row (fast & low memory)
+    cosine_sim = linear_kernel(tfidf_matrix[idx], tfidf_matrix).flatten()
+
+    # get top results excluding itself
+    sim_scores = cosine_sim.argsort()[-(top_n + 1):][::-1]
+    sim_scores = [i for i in sim_scores if i != idx][:top_n]
+
+    return movies["title"].iloc[sim_scores].tolist()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     recs = []
-    selected_movie = movies["title"].iloc[0] if len(movies) > 0 else ""
+    selected_movie = movies["title"].iloc[0] if len(movies) else ""
 
     if request.method == "POST":
-        selected_movie = request.form.get("movie")
-        recs = recommend(selected_movie, movies)
+        selected_movie = request.form.get("movie", selected_movie)
+        recs = recommend(selected_movie)
 
     return render_template(
         "index.html",
