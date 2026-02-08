@@ -8,7 +8,7 @@ This system analyzes movie genres and suggests **5 similar movies** to the one s
 
 ## 🔗 Live Demo
 
-👉 **Live Application:** [https://car-price-prediction-wsk.onrender.com](https://car-price-prediction-wsk.onrender.com)
+👉 **Live Application:** [[https://car-price-prediction-wsk.onrender.com](https://car-price-prediction-wsk.onrender.com)](https://movie-recommendation-system-y3u3.onrender.com)
 
 ---
 
