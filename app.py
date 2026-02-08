@@ -3,14 +3,26 @@ import pickle
 
 app = Flask(__name__)
 
-movies = pickle.load(open("movies.pkl", "rb"))
 similarity = pickle.load(open("similarity.pkl", "rb"))
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
 def recommend(movie):
-    idx = movies[movies["title"] == movie].index[0]
-    distances = similarity[idx]
-    movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
-    return [movies.iloc[i[0]].title for i in movie_list]
+    tfidf = TfidfVectorizer(stop_words='english')
+
+    tfidf_matrix = tfidf.fit_transform(movies['genres'])
+
+    cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+    idx = movies[movies['title'] == movie].index[0]
+
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]
+
+    movie_indices = [i[0] for i in sim_scores]
+
+    return movies['title'].iloc[movie_indices].values
 
 @app.route("/", methods=["GET", "POST"])
 def index():
