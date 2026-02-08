@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Recommendation System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>🎬 Movie Recommendation System</h2>
+
+    <form method="POST" action="/">
+      <label>Select a Movie:</label>
+      <input list="movies" name="movie" id="movieInput"
+       placeholder="Type movie name..."
+       value="{{ selected_movie if selected_movie else '' }}"
+       required>
+
+<datalist id="movies">
+  {% for movie in movie_list %}
+    <option value="{{ movie }}">
+  {% endfor %}
+</datalist>
+
+
+
+      <button type="submit">Recommend</button>
+    </form>
+
+    {% if recommendations %}
+<div class="rec-box">
+    <h3>🍿 Recommended Movies</h3>
+    <div class="rec-list">
+        {% for rec in recommendations %}
+            <div class="rec-card">
+                <span class="rec-dot"></span>
+                <span class="rec-title">{{ rec }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+  </div>
+</body>
+</html>
